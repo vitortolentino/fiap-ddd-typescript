@@ -30,8 +30,8 @@ src/
 
 ## Pré-requisitos
 
-- [Node.js](https://nodejs.org/en/) (versão 14 ou superior)
-- [npm](https://www.npmjs.com/) (versão 6 ou superior) ou [Yarn](https://yarnpkg.com/)
+- [Node.js](https://nodejs.org/en/) (versão 20 ou superior)
+- [npm](https://www.npmjs.com/) (versão 10.2.4 ou superior) ou [Yarn](https://yarnpkg.com/)
 
 ## Instalação
 
