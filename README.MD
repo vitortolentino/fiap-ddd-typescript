@@ -9,6 +9,7 @@ Este é um exemplo de aplicação de Sistema de Gerenciamento de Pedidos utiliza
 
 ## Estrutura de Pastas
 
+```sh
 src/
 ├── domain/
 │ ├── entities/
@@ -23,6 +24,8 @@ src/
 ├── presentation/
 │ ├── controllers/
 │ ├── routes/
+```
+
 
 
 ## Pré-requisitos
