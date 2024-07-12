@@ -1,31 +1,33 @@
 import { Router } from "express";
 import { OrderController } from "../controllers/OrderController";
-import { CreateOrderUseCase } from "../../application/useCases/CreateOrderUseCase";
-import { GetOrderByIdUseCase } from "../../application/useCases/GetOrderByIdUseCase";
-import { UpdateOrderUseCase } from "../../application/useCases/UpdateOrderUseCase";
-import { CancelOrderUseCase } from "../../application/useCases/CancelOrderUseCase";
-import { OrderService } from "../../domain/services/OrderService";
-import { InMemoryOrderRepository } from "../../infra/repositories/InMemoryOrderRepository";
+import { CreateOrderUseCase } from "../../domain/useCases/CreateOrderUseCase";
+import { Order } from "../../domain/entites/Order";
+import { uuid } from "uuidv4";
+import { InMemoryOrderRepository } from "../../infra/repositories/OrderRepository";
+import { InMemoryCostumerRepository } from "../../infra/repositories/CostumerRepository";
+
+const orderRepository = new InMemoryOrderRepository();
+const costumerRepository = new InMemoryCostumerRepository();
+const createOrderUseCase = new CreateOrderUseCase(
+  orderRepository,
+  costumerRepository
+);
+
+const orderController = new OrderController(createOrderUseCase);
 
 const router = Router();
-const orderRepository = new InMemoryOrderRepository();
-const orderService = new OrderService(orderRepository);
-const createOrderUseCase = new CreateOrderUseCase(orderService);
-const getOrderByIdUseCase = new GetOrderByIdUseCase(orderRepository);
-const updateOrderUseCase = new UpdateOrderUseCase(orderRepository);
-const cancelOrderUseCase = new CancelOrderUseCase(orderRepository);
-const orderController = new OrderController(
-  createOrderUseCase,
-  getOrderByIdUseCase,
-  updateOrderUseCase,
-  cancelOrderUseCase
-);
 
-router.post("/orders", (req, res) => orderController.createOrder(req, res));
-router.get("/orders/:id", (req, res) => orderController.getOrderById(req, res));
-router.put("/orders/:id", (req, res) => orderController.updateOrder(req, res));
-router.delete("/orders/:id", (req, res) =>
-  orderController.cancelOrder(req, res)
-);
+router.post("/user", async (req, res) => {
+  const { costumerId, items, total } = req.body;
 
-export { router as OrderRoutes };
+  const id = uuid();
+
+  const order = new Order(id, costumerId, items, total);
+
+  const createdOrder = await orderController.create(order);
+  if (!createdOrder) {
+    return res.status(500).send("Deu ruim");
+  }
+
+  res.send({ order: createdOrder });
+});

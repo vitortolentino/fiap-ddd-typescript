@@ -5,11 +5,12 @@ presentation:
   theme: night.css
 ---
 
-# Aula de Programação: DDD na Prática com TypeScript
 
 <!-- slide -->
 
-## Tópicos Principais
+# Aula de Programação: DDD na Prática com TypeScript
+
+<!-- slide -->
 
 ### 1. O que é DDD?
 - **Definição**: DDD (Domain-Driven Design) é uma abordagem de design de software focada no domínio do problema e na lógica do negócio.

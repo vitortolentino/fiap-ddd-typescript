@@ -1,7 +1,7 @@
 export class Order {
   constructor(
     public id: string,
-    public customerId: string,
+    public costumerId: string,
     public items: OrderItem[],
     public total: number,
     public status: "canceled" | "active" = "active"
